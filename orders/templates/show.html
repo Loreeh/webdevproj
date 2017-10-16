@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Print Order {% endblock %}
+
+{% block body %}
+
+            {% for order in order %}
+                <section>
+                    <div class="section-header">
+						<ol class="breadcrumb">
+							<li style="color: #000000" class="active">Official Receipt</li>
+						</ol>
+					</div>
+					<div class="section-body">
+                        <div class="row">
+							<div class="col-lg-12">
+								<div class="card card-printable style-default-light">
+									<div class="card-head">
+										<div class="tools">
+											<div class="btn-group">
+												<a class="btn btn-floating-action btn-info" href="javascript:void(0);" onclick="javascript:window.print();"><i class="md md-print"></i></a>
+											</div>
+										</div>
+									</div><!--end .card-head -->
+									<div class="card-body style-default-bright" id="print">
+
+										<!-- BEGIN INVOICE HEADER -->
+										<div class="row">
+											<!--<div class="col-xs-2">
+												<img src="{% static 'img/django_logo.png' %}" class="invoice_logo" width="100%">
+											</div>-->
+											<div class="col-xs-8">
+												<h1 class="text-bold" style="margin-top: 0px; color: #f70b0b">ELEMENTO <strong class="text-accent-dark" style="color: #1ab394">AIRLINES</strong></h1>
+												<p>Daang Maharlika Highway, Buhangin, Davao City, 8000 Davao del Sur<br>Elemento Airline International</p>
+											</div>
+											<div class="col-xs-4 text-right">
+												<h1 class="text-light text-default-light">Seat Reservation</h1>
+											</div>
+										</div><!--end .row -->
+										<!-- END INVOICE HEADER -->
+
+										<br/>
+
+										<!-- BEGIN INVOICE DESCRIPTION -->
+										<div class="row">
+											<div class="col-xs-8">
+												<h4 class="text-light">Seat Reserved For:</h4>
+												<address>
+													<strong>{{ order.name }}</strong><br>
+													{{ order.address }}<br>
+													<b>Phone:</b> {{ order.phone }}
+												</address>
+											</div><!--end .col -->
+											<div class="col-xs-4">
+												<div class="well">
+													<div class="clearfix">
+														<div class="pull-left"> FLIGHT ID : </div>
+														<div class="pull-right"> {{ order.id }} </div>
+													</div>
+													<!--<div class="clearfix">
+														<div class="pull-left"> INVOICE DATE : </div>
+														<div class="pull-right">  </div>
+													</div>-->
+													<div class="clearfix">
+														<div class="pull-left"> DATE BOOKED : </div>
+														<div class="pull-right"> {{ order.delivery_date }} </div>
+													</div>
+												</div>
+											</div><!--end .col -->
+										</div><!--end .row -->
+										<!-- END INVOICE DESCRIPTION -->
+
+										<br/>
+
+										<!-- BEGIN INVOICE PRODUCTS -->
+										<div class="row">
+											<div class="col-md-12">
+												<table class="table">
+													<thead>
+														<tr>
+															<th style="width:60px" class="text-center">BAGGAGES</th>
+															<th class="text-left">FLIGHT DESCRIPTION</th>
+                                                            <th style="width:90px" class="text-right">BOOKING PRICE</th>
+															<th style="width:90px" class="text-right">OVERALL AMOUNT</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td class="text-center">{{ order.quantity }}</td>
+															<td> <b>{{ order.product_id.id}}. {{ order.product_id.product_name }}</b> <br><small>{{ order.product_id.product_details}}</small></td>
+															<td class="text-right">Php {{ order.product_id.price }}</td>
+															<td class="text-right">Php {{ order.product_id.price }}</td>
+														</tr>
+														<tr>
+															<td colspan="2" rowspan="4">
+																<h3 class="text-light opacity-50">On Refund</h3>
+																<p><small>You can either cancel the reservation entirely, or change it, within the 24-hour window. If you change it however, a fare difference may apply, but there is no change penalty. This applies not just to PH based Airlines, but any airline selling airfares in the Philippines.
+																You still have to pay for the airfare, and then get a refund without penalty.</small></p><br><br>
+																<p><strong><em>Approved By: Laurie John Rasonabe, CEO, Elemento Airlines</em></strong></p>
+															</td>
+															<td class="text-right"><strong>Subtotal</strong></td>
+															<td class="text-right">Php {{ order.product_id.price }}</td>
+														</tr>
+														<tr>
+															<td class="text-right hidden-border"><strong>VAT</strong></td>
+															<td class="text-right hidden-border">PHP 0.00</td>
+														</tr>
+														<tr>
+															<td class="text-right"><strong class="text-lg text-accent">Total</strong></td>
+															<td class="text-right"><strong class="text-lg text-accent">Php 	{{ order.product_id.price }}</strong></td>
+														</tr>
+													</tbody>
+												</table>
+											</div><!--end .col -->
+										</div><!--end .row -->
+										<!-- END INVOICE PRODUCTS -->
+
+									</div><!--end .card-body -->
+								</div><!--end .card -->
+							</div><!--end .col -->
+						</div><!--end .row -->
+					</div><!--end .section-body -->
+                </section>
+            {% endfor %}
+
+{% endblock %}
